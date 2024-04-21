@@ -4,6 +4,7 @@ import { Button } from "./index";
 
 describe("Button Tests", () => {
   test("should render button", () => {
+    // @ts-ignore
     render(<Button onClick={() => {}}>Click me</Button>);
 
     const element = screen.getByTestId("button-test");
