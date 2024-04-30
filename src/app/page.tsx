@@ -15,7 +15,7 @@ export default function Home(): React.JSX.Element {
   return (
     <main>
       <div className={"inline-block bg-black text-inverse p-3 m-5 rounded-xl"}>
-        <Button onClick={signIn}>SignIn</Button>
+        <Button onClick={signIn} label={"SignIn"} />
       </div>
     </main>
   );
