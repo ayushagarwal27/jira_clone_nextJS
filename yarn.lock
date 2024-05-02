@@ -2947,6 +2947,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@radix-ui/react-icons@npm:^1.3.0":
+  version: 1.3.0
+  resolution: "@radix-ui/react-icons@npm:1.3.0"
+  peerDependencies:
+    react: ^16.x || ^17.x || ^18.x
+  checksum: 10c0/581657680e43fd13ff06e01f963e3afa94671d4ce6c3fb126e2c70c993ab8650faa55286974032dbccfecca4db57308fb66d53771d765887e03600cddee84ae5
+  languageName: node
+  linkType: hard
+
 "@radix-ui/react-id@npm:1.0.1":
   version: 1.0.1
   resolution: "@radix-ui/react-id@npm:1.0.1"
@@ -11101,6 +11110,7 @@ __metadata:
     "@auth/prisma-adapter": "npm:^2.0.0"
     "@material-tailwind/react": "npm:2.1.9"
     "@prisma/client": "npm:^5.13.0"
+    "@radix-ui/react-icons": "npm:^1.3.0"
     "@storybook/addon-essentials": "npm:7.6.13"
     "@storybook/addon-interactions": "npm:7.6.13"
     "@storybook/addon-links": "npm:7.6.13"
