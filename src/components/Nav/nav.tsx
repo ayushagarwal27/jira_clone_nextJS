@@ -2,14 +2,15 @@
 import React, { FC, ReactNode, useEffect, useState } from "react";
 import { HamburgerMenuIcon } from "@radix-ui/react-icons";
 import customHook from "@/hooks";
+import { NavAvatar } from "@/components/Nav/NavAvatar";
 
 interface NavProps {
-  children: ReactNode;
+  children?: ReactNode;
 }
 
 const NavContainer: FC<NavProps> = ({ children }) => {
   const { isDesktop } = customHook.useWindowDimensions();
-  const [showNav, toggleNav] = useState(false);
+  const [showNav, toggleNav] = useState(true);
 
   return (
     <div className={"bg-navBg fixed w-screen"}>
@@ -77,9 +78,7 @@ export const NavBar: FC<NavProps> = ({ children }) => {
           <NavItem>Filters</NavItem>
         </NavGroup>{" "}
         <NavGroup>
-          <NavItem>Your Work</NavItem>
-          <NavItem>Projects</NavItem>
-          <NavItem>Filters</NavItem>
+          <NavAvatar />
         </NavGroup>
       </NavRenderer>
     </NavContainer>
