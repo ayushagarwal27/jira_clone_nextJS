@@ -3,6 +3,7 @@ import React, { FC, ReactNode, useEffect, useState } from "react";
 import { HamburgerMenuIcon } from "@radix-ui/react-icons";
 import customHook from "@/hooks";
 import { NavAvatar } from "@/components/Nav/NavAvatar";
+import ThemeToggle from "@/components/Nav/ThemeToggle";
 
 interface NavProps {
   children?: ReactNode;
@@ -76,9 +77,10 @@ export const NavBar: FC<NavProps> = ({ children }) => {
           <NavItem>Your Work</NavItem>
           <NavItem>Projects</NavItem>
           <NavItem>Filters</NavItem>
-        </NavGroup>{" "}
+        </NavGroup>
         <NavGroup>
           <NavAvatar />
+          <ThemeToggle />
         </NavGroup>
       </NavRenderer>
     </NavContainer>
