@@ -24,6 +24,7 @@ const NavAvatar: FC = () => {
             src={session?.user?.image || ""}
             alt="profile picture"
             onClick={() => togglePopup(!showPopup)}
+
           />
           <Avatar.Fallback className="animate-pulse skeleton w-full h-full" />
           <Avatar.Image />
@@ -31,6 +32,7 @@ const NavAvatar: FC = () => {
       )}
 
       {!isLoading && !isLoggedIn && (
+
         <button
           className={"text-inverse button-brand p-2 rounded-sm cursor-pointer"}
           onClick={() => signIn()}
