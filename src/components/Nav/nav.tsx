@@ -62,7 +62,7 @@ const NavItem: FC<NavProps> = ({ children }) => {
 };
 
 const NavLogo = () => {
-  return <div className={"text-white"}>Jira Clone</div>;
+  return <div className={"text-white sm:ml-3"}>Jira Clone</div>;
 };
 
 export const NavBar: FC<NavProps> = ({ children }) => {
