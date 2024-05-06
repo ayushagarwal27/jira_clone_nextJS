@@ -4,6 +4,7 @@ import { HamburgerMenuIcon } from "@radix-ui/react-icons";
 import customHook from "@/hooks";
 import { NavAvatar } from "@/components/Nav/NavAvatar";
 import ThemeToggle from "@/components/Nav/ThemeToggle";
+import { NavDataType } from "@/components/Nav/nav.type";
 
 interface NavProps {
   children?: ReactNode;
@@ -50,7 +51,7 @@ const NavGroup: FC<NavProps> = ({ children }) => {
   );
 };
 
-const NavItem: FC<NavProps> = ({ children }) => {
+export const NavItem: FC<NavProps> = ({ children }) => {
   return (
     <div
       className={
@@ -62,26 +63,42 @@ const NavItem: FC<NavProps> = ({ children }) => {
   );
 };
 
-const NavLogo = () => {
-  return <div className={"text-white sm:ml-3"}>Jira Clone</div>;
+export const NavLogo: FC<NavProps> = ({ children }) => {
+  return <div className={"text-white sm:ml-3"}>{children}</div>;
 };
 
 export const NavBar: FC<NavProps> = ({ children }) => {
+  const [navbarData, setNavBarData] = useState<NavDataType>([]);
+  useEffect(() => {
+    async function fetchConfig() {
+      const data = await fetch("/api/config");
+      const { navData } = await data.json();
+      setNavBarData(navData);
+    }
+    fetchConfig();
+  }, []);
+
+  const navItemMap = {
+    logo: NavLogo,
+    item: NavItem,
+    avatar: NavAvatar,
+    themeToggle: ThemeToggle,
+  };
   return (
     <NavContainer>
       <NavRenderer>
-        <NavGroup>
-          <NavLogo />
-        </NavGroup>
-        <NavGroup>
-          <NavItem>Your Work</NavItem>
-          <NavItem>Projects</NavItem>
-          <NavItem>Filters</NavItem>
-        </NavGroup>
-        <NavGroup>
-          <NavAvatar />
-          <ThemeToggle />
-        </NavGroup>
+        {navbarData?.map((navGroup) => (
+          <NavGroup key={navGroup.id}>
+            {navGroup?.items?.map((navItem) => {
+              const Item = navItemMap[navItem.type] || <></>;
+              return (
+                <Item key={navItem.id}>
+                  {navItem.content ? navItem.content : ""}
+                </Item>
+              );
+            })}
+          </NavGroup>
+        ))}
       </NavRenderer>
     </NavContainer>
   );
