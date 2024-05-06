@@ -4,6 +4,7 @@ import { HamburgerMenuIcon } from "@radix-ui/react-icons";
 import customHook from "@/hooks";
 import { NavAvatar } from "@/components/Nav/NavAvatar";
 import ThemeToggle from "@/components/Nav/ThemeToggle";
+import { NavDataType } from "@/components/Nav/nav.type";
 
 interface NavProps {
   children?: ReactNode;
@@ -67,7 +68,7 @@ export const NavLogo: FC<NavProps> = ({ children }) => {
 };
 
 export const NavBar: FC<NavProps> = ({ children }) => {
-  const [navbarData, setNavBarData] = useState([]);
+  const [navbarData, setNavBarData] = useState<NavDataType>([]);
   useEffect(() => {
     async function fetchConfig() {
       const data = await fetch("/api/config");
@@ -90,7 +91,11 @@ export const NavBar: FC<NavProps> = ({ children }) => {
           <NavGroup key={navGroup.id}>
             {navGroup?.items?.map((navItem) => {
               const Item = navItemMap[navItem.type] || <></>;
-              return <Item>{navItem.content ? navItem.content : ""}</Item>;
+              return (
+                <Item key={navItem.id}>
+                  {navItem.content ? navItem.content : ""}
+                </Item>
+              );
             })}
           </NavGroup>
         ))}
