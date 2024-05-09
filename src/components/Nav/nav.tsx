@@ -69,7 +69,7 @@ export const NavLogo: FC<NavProps> = ({ children }) => {
 
 export const NavBar: FC<{
   externalNavData?: NavDataType;
-  children: ReactNode;
+  children?: ReactNode;
 }> = ({ children, externalNavData }) => {
   const [navbarData, setNavBarData] = useState<NavDataType>([]);
   useEffect(() => {
