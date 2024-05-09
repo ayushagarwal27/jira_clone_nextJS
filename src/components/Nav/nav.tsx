@@ -67,7 +67,10 @@ export const NavLogo: FC<NavProps> = ({ children }) => {
   return <div className={"text-white sm:ml-3"}>{children}</div>;
 };
 
-export const NavBar: FC<NavProps> = ({ children }) => {
+export const NavBar: FC<{
+  externalNavData?: NavDataType;
+  children: ReactNode;
+}> = ({ children, externalNavData }) => {
   const [navbarData, setNavBarData] = useState<NavDataType>([]);
   useEffect(() => {
     async function fetchConfig() {
@@ -75,8 +78,12 @@ export const NavBar: FC<NavProps> = ({ children }) => {
       const { navData } = await data.json();
       setNavBarData(navData);
     }
-    fetchConfig();
-  }, []);
+    if (!externalNavData) {
+      fetchConfig();
+    } else {
+      setNavBarData(externalNavData);
+    }
+  }, [externalNavData]);
 
   const navItemMap = {
     logo: NavLogo,
