@@ -5,13 +5,15 @@ import customHook from "@/hooks";
 import { NavAvatar } from "@/components/Nav/NavAvatar";
 import ThemeToggle from "@/components/Nav/ThemeToggle";
 import { NavDataType } from "@/components/Nav/nav.type";
+import { useSession } from "next-auth/react";
 
 interface NavProps {
   children?: ReactNode;
 }
 
 const NavContainer: FC<NavProps> = ({ children }) => {
-  const { isDesktop } = customHook.useWindowDimensions();
+  const { useWindowDimensions } = customHook;
+  const { isDesktop } = useWindowDimensions();
   const [showNav, toggleNav] = useState(true);
 
   return (
@@ -21,6 +23,7 @@ const NavContainer: FC<NavProps> = ({ children }) => {
           height={30}
           width={30}
           className={"ml-auto my-3 mr-3 text-white cursor-pointer"}
+          data-testId={"hamburger_icon"}
           onClick={() => toggleNav(!showNav)}
         />
       )}
@@ -51,7 +54,12 @@ const NavGroup: FC<NavProps> = ({ children }) => {
   );
 };
 
-export const NavItem: FC<NavProps> = ({ children }) => {
+export const NavItem: FC<{ children: ReactNode; authOnly?: boolean }> = ({
+  children,
+  authOnly = false,
+}) => {
+  const { status } = useSession();
+  if (authOnly && status !== "authenticated") return <></>;
   return (
     <div
       className={
@@ -99,7 +107,7 @@ export const NavBar: FC<{
             {navGroup?.items?.map((navItem) => {
               const Item = navItemMap[navItem.type] || <></>;
               return (
-                <Item key={navItem.id}>
+                <Item key={navItem.id} authOnly={navItem.authOnly}>
                   {navItem.content ? navItem.content : ""}
                 </Item>
               );
