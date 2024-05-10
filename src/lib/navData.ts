@@ -3,9 +3,9 @@ export const navData = [
   {
     id: 1,
     items: [
-      { id: 1, type: "item", content: "Your Work" },
-      { id: 2, type: "item", content: "Projects" },
-      { id: 3, type: "item", content: "Filters" },
+      { id: 1, type: "item", content: "Your Work", authOnly: true },
+      { id: 2, type: "item", content: "Projects", authOnly: true },
+      { id: 3, type: "item", content: "Filters", authOnly: true },
     ],
   },
   {

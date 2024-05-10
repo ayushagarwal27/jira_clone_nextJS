@@ -23,19 +23,22 @@ const NavAvatar: FC = () => {
             className="h-full w-full rounded-[inherit] object-cover"
             src={session?.user?.image || ""}
             alt="profile picture"
+            data-testId={"profile_picture"}
             onClick={() => togglePopup(!showPopup)}
-
           />
-          <Avatar.Fallback className="animate-pulse skeleton w-full h-full" />
+          <Avatar.Fallback
+            className="animate-pulse skeleton w-full h-full"
+            data-testId={"profile_shimmer"}
+          />
           <Avatar.Image />
         </Avatar.Root>
       )}
 
       {!isLoading && !isLoggedIn && (
-
         <button
           className={"text-inverse button-brand p-2 rounded-sm cursor-pointer"}
           onClick={() => signIn()}
+          data-testId={"login_btn"}
         >
           Login
         </button>
