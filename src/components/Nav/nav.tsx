@@ -17,7 +17,7 @@ const NavContainer: FC<NavProps> = ({ children }) => {
   const [showNav, toggleNav] = useState(true);
 
   return (
-    <div className={"bg-navBg fixed w-screen"}>
+    <div className={"bg-navBg fixed w-screen z-[1]"}>
       {!isDesktop && (
         <HamburgerMenuIcon
           height={30}
