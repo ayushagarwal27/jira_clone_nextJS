@@ -1,13 +1,11 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
-import { NextResponse } from "next/server";
 
 export async function getAllBoards() {
-  const boards = await prisma.board.findMany({
+  return await prisma.board.findMany({
     select: { id: true, title: true },
   });
-  return boards;
 }
 
 export async function fetchBoard(boardId: string, skip = 0, take = 10) {
@@ -24,6 +22,7 @@ export async function fetchBoard(boardId: string, skip = 0, take = 10) {
 
   const boardTickets = prisma.boardTicket.findMany({
     where: { boardId },
+    include: { assignedUser: true },
     skip: skip,
     take: take,
   });
