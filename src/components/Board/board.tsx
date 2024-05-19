@@ -10,9 +10,8 @@ import {
 } from "@hello-pangea/dnd";
 import cx from "classnames";
 import { updateTicketAtBackend } from "@/app/actions/board";
-import { log } from "node:util";
 
-interface BoardTicketWithUser extends BoardTicket {
+export interface BoardTicketWithUser extends BoardTicket {
   assignedUser: { name: string };
 }
 
@@ -36,12 +35,12 @@ const Board: FC<BoardProps> = ({ boardTickets, boardColumns }) => {
       if (ticket.id === result.draggableId) {
         return {
           ...ticket,
-          boardColumnId: result.destination?.droppableId,
-          position: result.destination?.index,
+          boardColumnId: result.destination!.droppableId,
+          position: result.destination!.index,
         };
       } else if (
-        ticket.boardColumnId === result.destination?.droppableId &&
-        ticket.position >= result.destination?.index
+        ticket.boardColumnId === result.destination!.droppableId &&
+        ticket.position >= result.destination!.index
       ) {
         return {
           ...ticket,
@@ -58,7 +57,6 @@ const Board: FC<BoardProps> = ({ boardTickets, boardColumns }) => {
       }
       return ticket;
     });
-
     // @ts-ignore
     setTickets(updatedTickets);
     updateTicketAtBackend(updatedTickets);
