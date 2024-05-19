@@ -1,6 +1,7 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
+import { BoardTicket } from "@prisma/client";
 
 export async function getAllBoards() {
   return await prisma.board.findMany({
@@ -33,3 +34,13 @@ export async function fetchBoard(boardId: string, skip = 0, take = 10) {
     data: { board: data[0], boardColumns: data[1], boardTickets: data[2] },
   };
 }
+
+export const updateTicketAtBackend = async (ticketsToUpdate: BoardTicket[]) => {
+  const transactions = ticketsToUpdate.map((ticket) => {
+    return prisma.boardTicket.update({
+      where: { id: ticket.id },
+      data: { boardColumnId: ticket.boardColumnId, position: ticket.position },
+    });
+  });
+  const updatedTickets = await prisma.$transaction(transactions);
+};

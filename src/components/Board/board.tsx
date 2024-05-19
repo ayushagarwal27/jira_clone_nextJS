@@ -9,6 +9,8 @@ import {
   OnDragEndResponder,
 } from "@hello-pangea/dnd";
 import cx from "classnames";
+import { updateTicketAtBackend } from "@/app/actions/board";
+import { log } from "node:util";
 
 interface BoardTicketWithUser extends BoardTicket {
   assignedUser: { name: string };
@@ -59,6 +61,7 @@ const Board: FC<BoardProps> = ({ boardTickets, boardColumns }) => {
 
     // @ts-ignore
     setTickets(updatedTickets);
+    updateTicketAtBackend(updatedTickets);
   };
 
   return (
