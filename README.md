@@ -4,3 +4,4 @@
 - typeScript
 - tailwind css
 - jest, react-testing-library
+- config driven UI

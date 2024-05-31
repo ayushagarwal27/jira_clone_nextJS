@@ -6,6 +6,7 @@ import { NavAvatar } from "@/components/Nav/NavAvatar";
 import ThemeToggle from "@/components/Nav/ThemeToggle";
 import { NavDataType } from "@/components/Nav/nav.type";
 import { useSession } from "next-auth/react";
+import { CreateButton } from "@/components/Nav/CreateButton";
 
 interface NavProps {
   children?: ReactNode;
@@ -54,10 +55,11 @@ const NavGroup: FC<NavProps> = ({ children }) => {
   );
 };
 
-export const NavItem: FC<{ children: ReactNode; authOnly?: boolean }> = ({
-  children,
-  authOnly = false,
-}) => {
+export const NavItem: FC<{
+  children: ReactNode;
+  authOnly?: boolean;
+  isTest?: boolean;
+}> = ({ children, authOnly = false, isTest }) => {
   const { status } = useSession();
   if (authOnly && status !== "authenticated") return <></>;
   return (
@@ -98,6 +100,7 @@ export const NavBar: FC<{
     item: NavItem,
     avatar: NavAvatar,
     themeToggle: ThemeToggle,
+    create: CreateButton,
   };
   return (
     <NavContainer>
@@ -107,7 +110,11 @@ export const NavBar: FC<{
             {navGroup?.items?.map((navItem) => {
               const Item = navItemMap[navItem.type] || <></>;
               return (
-                <Item key={navItem.id} authOnly={navItem.authOnly}>
+                <Item
+                  key={navItem.id}
+                  authOnly={navItem.authOnly}
+                  isTest={externalNavData !== null}
+                >
                   {navItem.content ? navItem.content : ""}
                 </Item>
               );
