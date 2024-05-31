@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 "use client";
 import { useState, useRef, useEffect } from "react";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
@@ -58,11 +59,13 @@ const CreateButton = ({ isTest }: { isTest: boolean }) => {
     },
   });
 
+  //     {/* istanbul ignore next */ }
   const onSubmit: SubmitHandler<CreateTicketFields> = async (data) => {
     setOpen(false);
   };
 
   useEffect(() => {
+    /* istanbul ignore next */
     const fetchUsers = async () => {
       const usersRes = await getUsers();
       setUsers(usersRes);

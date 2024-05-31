@@ -55,10 +55,11 @@ const NavGroup: FC<NavProps> = ({ children }) => {
   );
 };
 
-export const NavItem: FC<{ children: ReactNode; authOnly?: boolean }> = ({
-  children,
-  authOnly = false,
-}) => {
+export const NavItem: FC<{
+  children: ReactNode;
+  authOnly?: boolean;
+  isTest?: boolean;
+}> = ({ children, authOnly = false, isTest }) => {
   const { status } = useSession();
   if (authOnly && status !== "authenticated") return <></>;
   return (
@@ -109,7 +110,11 @@ export const NavBar: FC<{
             {navGroup?.items?.map((navItem) => {
               const Item = navItemMap[navItem.type] || <></>;
               return (
-                <Item key={navItem.id} authOnly={navItem.authOnly}>
+                <Item
+                  key={navItem.id}
+                  authOnly={navItem.authOnly}
+                  isTest={externalNavData !== null}
+                >
                   {navItem.content ? navItem.content : ""}
                 </Item>
               );
