@@ -149,3 +149,6 @@
     @apply outline-none;
   }
 }
+.tox-tinymce-aux {
+  z-index: 10000 !important;
+}

@@ -6,6 +6,7 @@ import { NavAvatar } from "@/components/Nav/NavAvatar";
 import ThemeToggle from "@/components/Nav/ThemeToggle";
 import { NavDataType } from "@/components/Nav/nav.type";
 import { useSession } from "next-auth/react";
+import { CreateButton } from "@/components/Nav/CreateButton";
 
 interface NavProps {
   children?: ReactNode;
@@ -98,6 +99,7 @@ export const NavBar: FC<{
     item: NavItem,
     avatar: NavAvatar,
     themeToggle: ThemeToggle,
+    create: CreateButton,
   };
   return (
     <NavContainer>
