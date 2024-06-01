@@ -10,6 +10,8 @@ import {
 } from "@hello-pangea/dnd";
 import cx from "classnames";
 import { updateTicketAtBackend } from "@/app/actions/board";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export interface BoardTicketWithUser extends BoardTicket {
   assignedUser: { name: string };
@@ -22,7 +24,12 @@ interface BoardProps {
 
 const Board: FC<BoardProps> = ({ boardTickets, boardColumns }) => {
   const [tickets, setTickets] = useState<BoardTicketWithUser[]>([]);
-
+  const { status } = useSession();
+  const isUnAuthenticated = status === "unauthenticated";
+  const router = useRouter();
+  if (isUnAuthenticated) {
+    router.push("/");
+  }
   const getTicketForColumn = (columnId: string) => {
     return tickets
       .filter((ticket) => ticket.boardColumnId === columnId)

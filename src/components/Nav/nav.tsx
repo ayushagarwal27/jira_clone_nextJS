@@ -7,6 +7,7 @@ import ThemeToggle from "@/components/Nav/ThemeToggle";
 import { NavDataType } from "@/components/Nav/nav.type";
 import { useSession } from "next-auth/react";
 import { CreateButton } from "@/components/Nav/CreateButton";
+import { useRouter } from "next/navigation";
 
 interface NavProps {
   children?: ReactNode;
@@ -74,7 +75,15 @@ export const NavItem: FC<{
 };
 
 export const NavLogo: FC<NavProps> = ({ children }) => {
-  return <div className={"text-white sm:ml-3"}>{children}</div>;
+  const router = useRouter();
+  return (
+    <div
+      className={"text-white sm:ml-3 cursor-pointer"}
+      onClick={() => router.push("/")}
+    >
+      {children}
+    </div>
+  );
 };
 
 export const NavBar: FC<{
