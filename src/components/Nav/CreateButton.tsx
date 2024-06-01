@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 "use client";
-import { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { usePathname } from "next/navigation";
 import { useSession } from "next-auth/react";
@@ -20,6 +20,7 @@ import { Editor } from "@tinymce/tinymce-react";
 import * as z from "zod";
 import { getUsers } from "@/app/actions/users";
 import { User } from "@prisma/client";
+import { createTicket } from "@/app/actions/board";
 
 interface CreateTicketFields {
   title: string;
@@ -35,14 +36,21 @@ const schema = z.object({
   points: z.number().optional(),
 });
 
-const CreateButton = ({ isTest }: { isTest: boolean }) => {
+const CreateButton = ({
+  isTest,
+  authOnly,
+}: {
+  isTest: boolean;
+  authOnly: boolean;
+}) => {
+  const { data: session, status } = useSession();
   const [open, setOpen] = useState(false);
   const [users, setUsers] = useState<User[]>([]);
-  const handleOpen = () => setOpen(!open);
   const modalRef = useRef(null);
   const editorRef = useRef(null);
   const path = usePathname();
-  const { data: session } = useSession();
+
+  const handleOpen = () => setOpen(!open);
   const boardId = path?.split("/")[2];
   const {
     register,
@@ -61,6 +69,14 @@ const CreateButton = ({ isTest }: { isTest: boolean }) => {
 
   //     {/* istanbul ignore next */ }
   const onSubmit: SubmitHandler<CreateTicketFields> = async (data) => {
+    await createTicket({
+      title: data.title,
+      description: data.description,
+      boardId,
+      storyPoints: data.points,
+      assignedTo: data.assignee,
+      reportedBy: session?.user?.id,
+    });
     setOpen(false);
   };
 
@@ -72,6 +88,8 @@ const CreateButton = ({ isTest }: { isTest: boolean }) => {
     };
     if (!isTest) fetchUsers();
   }, [isTest]);
+
+  if (authOnly && status !== "authenticated") return <></>;
   return (
     <>
       <button
@@ -159,7 +177,7 @@ const CreateButton = ({ isTest }: { isTest: boolean }) => {
                 >
                   ¯
                   {users?.map((user, index) => (
-                    <Option key={index} value={user.id}>
+                    <Option key={user.id} value={user.id}>
                       <div className="flex items-center gap-x-2">
                         {user.name}
                       </div>

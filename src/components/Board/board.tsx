@@ -1,6 +1,6 @@
 "use client";
 
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { BoardColumn, BoardTicket } from "@prisma/client";
 import { Ticket } from "@/components/Board/Ticket";
 import {
@@ -21,13 +21,17 @@ interface BoardProps {
 }
 
 const Board: FC<BoardProps> = ({ boardTickets, boardColumns }) => {
-  const [tickets, setTickets] = useState(boardTickets);
+  const [tickets, setTickets] = useState<BoardTicketWithUser[]>([]);
 
   const getTicketForColumn = (columnId: string) => {
     return tickets
       .filter((ticket) => ticket.boardColumnId === columnId)
       .sort((a, b) => a.position - b.position);
   };
+
+  useEffect(() => {
+    setTickets(boardTickets);
+  }, [boardTickets]);
 
   const handleDragEnd: OnDragEndResponder = (result) => {
     const currentTickets = [...tickets];
