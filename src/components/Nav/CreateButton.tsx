@@ -1,6 +1,8 @@
 /* istanbul ignore file */
 "use client";
-import React, { useState, useRef, useEffect } from "react";
+
+import { useState, useRef, useEffect } from "react";
+
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { usePathname } from "next/navigation";
 import { useSession } from "next-auth/react";
@@ -51,6 +53,7 @@ const CreateButton = ({
   const path = usePathname();
 
   const handleOpen = () => setOpen(!open);
+
   const boardId = path?.split("/")[2];
   const {
     register,
@@ -77,6 +80,7 @@ const CreateButton = ({
       assignedTo: data.assignee,
       reportedBy: session?.user?.id!,
     });
+
     setOpen(false);
   };
 
@@ -90,6 +94,7 @@ const CreateButton = ({
   }, [isTest]);
 
   if (authOnly && status !== "authenticated") return <></>;
+
   return (
     <>
       <button
@@ -177,7 +182,7 @@ const CreateButton = ({
                 >
                   ¯
                   {users?.map((user, index) => (
-                    <Option key={user.id} value={user.id}>
+                    <Option key={index} value={user.id}>
                       <div className="flex items-center gap-x-2">
                         {user.name}
                       </div>
