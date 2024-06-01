@@ -80,7 +80,7 @@ export const NavLogo: FC<NavProps> = ({ children }) => {
 export const NavBar: FC<{
   externalNavData?: NavDataType;
   children?: ReactNode;
-}> = ({ children, externalNavData }) => {
+}> = ({ children, externalNavData = null }) => {
   const [navbarData, setNavBarData] = useState<NavDataType>([]);
   useEffect(() => {
     async function fetchConfig() {
@@ -107,11 +107,11 @@ export const NavBar: FC<{
       <NavRenderer>
         {navbarData?.map((navGroup) => (
           <NavGroup key={navGroup.id}>
-            {navGroup?.items?.map((navItem) => {
+            {navGroup?.items?.map((navItem, index) => {
               const Item = navItemMap[navItem.type] || <></>;
               return (
                 <Item
-                  key={navItem.id}
+                  key={index}
                   authOnly={navItem.authOnly}
                   isTest={externalNavData !== null}
                 >
