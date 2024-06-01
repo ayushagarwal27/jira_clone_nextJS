@@ -47,7 +47,14 @@ export const updateTicketAtBackend = async (ticketsToUpdate: BoardTicket[]) => {
   await prisma.$transaction(transactions);
 };
 
-export const createTicket = async (data) => {
+export const createTicket = async (data: {
+  title: string;
+  description: string;
+  boardId: string;
+  storyPoints: number;
+  assignedTo: string;
+  reportedBy: string;
+}) => {
   const { title, description, boardId, storyPoints, assignedTo, reportedBy } =
     data;
   const status = TicketStatus.TODO;
@@ -73,7 +80,7 @@ export const createTicket = async (data) => {
       reportedBy,
       status,
       position: desiredPosition,
-      boardColumnId: targetColumn?.id,
+      boardColumnId: targetColumn?.id!,
     },
   });
 
