@@ -14,9 +14,9 @@ export default function Home(): React.JSX.Element {
         { "ml-[250px]": isAuthenticated },
       )}
     >
-      <h1 className={"text-3xl "}>Welcome to Jira Board 🎉</h1>
+      <h1 className={"text-3xl "}>{"Welcome to Jira Board 🎉"}</h1>
       <p className={"mt-4"}>
-        Let's start by{" "}
+        {`Let's start by `}
         {isAuthenticated ? "clicking on board links" : "logging you in"}
       </p>
     </main>
